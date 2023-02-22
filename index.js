@@ -1,5 +1,4 @@
 import express from 'express';
-import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import path from 'path';
 import bodyParser from 'body-parser';
@@ -9,6 +8,7 @@ import {DB} from './server.js'
 import { registerEmail } from './controllers/subscribe.js';
 import { writeMessageIntoDB } from './controllers/publish.js';
 import { sendTheMails } from './controllers/publish.js';
+import {textSearchInDB} from './controllers/textSearch.js'
 const app=express();
 
 // To configure the .env file
@@ -55,8 +55,9 @@ app.post('/publish',async (req,res)=>{
 })
 app.post('/textSearch',async (req,res)=>{
     const dataToSearch=req.body.textToSearch;
-    const responseFromSearch=await DB.query('SELECT * FROM MessageList WHERE message LIKE '+"'"+dataToSearch+'%'+"'");
-    res.send(responseFromSearch.rows);
+    const response=await textSearchInDB(dataToSearch);
+    
+    res.send(response.rows);
 })
 
 

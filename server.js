@@ -1,9 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import app from './index.js';
-// importing pg for database
 import pkg from 'pg';
-// import {client} from './database.js'
 const {Client} = pkg;
 
 dotenv.config();
