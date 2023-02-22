@@ -5,10 +5,9 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import {fileURLToPath} from 'url';
 
-// importing pg for database
-import pkg from 'pg';
-// import {client} from './database.js'
-const {Client} = pkg;
+import {DB} from './server.js'
+import { registerEmail } from './controllers/subscribe.js';
+
 
 const app=express();
 
@@ -27,45 +26,27 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 
-// Connecting DB
-const DB=new Client({
-    host:'localhost',
-    user:'postgres',
-    port:5432,
-    password:process.env.DB_PASSWORD,
-    database:'Atharv'
-})
-DB.connect();
-
 // Routes
 app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/starter.html'));
+    res.sendFile(path.join(__dirname,'/public/starter.html'));
 })
 app.get('/subscribe',(req,res)=>{
-    res.sendFile(path.join(__dirname+'/subscribe.html'))
+    res.sendFile(path.join(__dirname+'/public/subscribe.html'))
 })
 app.get('/publish',(req,res)=>{
-    res.sendFile(path.join(__dirname+'/publish.html'))
+    res.sendFile(path.join(__dirname+'/public/publish.html'))
 })
 app.get('/textSearch',(req,res)=>{
-    res.sendFile(path.join(__dirname+'/textSearch.html'))
+    res.sendFile(path.join(__dirname+'/public/textSearch.html'))
 })
-app.post('/subscribe',(req,res)=>{
-    const data=req.body;
-    const name=data.name;
-    const email=data.email;
-    DB.query("INSERT INTO MailList(name,email) VALUES('" + name + "','" + email + "')",(err,res)=>{
-        if(err){
-            console.log("Error",err);
-        }else{
-            console.log("Response",res);
-        }
-    })
+app.post('/subscribe',async (req,res)=>{
+    const {name,email}=req.body;
+    await registerEmail(name,email);
     res.end("Response Recieved")
 
 })
 app.post('/publish',async (req,res)=>{
-    const name=req.body;
+    const name=req.body.name;
     const message=req.body.inputMessage;
     const query={
         text:'INSERT INTO MessageList VALUES($1, $2)',
@@ -111,6 +92,4 @@ async function sendTheMails(mailMessage){
 
 }
 
-app.listen(process.env.PORT,()=>{
-    console.log(`Server is up and running at port ${process.env.PORT}`)
-})
+export default app;
