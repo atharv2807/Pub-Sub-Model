@@ -7,8 +7,8 @@ import {fileURLToPath} from 'url';
 
 import {DB} from './server.js'
 import { registerEmail } from './controllers/subscribe.js';
-
-
+import { writeMessageIntoDB } from './controllers/publish.js';
+import { sendTheMails } from './controllers/publish.js';
 const app=express();
 
 // To configure the .env file
@@ -47,12 +47,9 @@ app.post('/subscribe',async (req,res)=>{
 })
 app.post('/publish',async (req,res)=>{
     const name=req.body.name;
+    console.log(name);
     const message=req.body.inputMessage;
-    const query={
-        text:'INSERT INTO MessageList VALUES($1, $2)',
-        values:[name,message]
-    }
-    const responseFromMessageSave=await DB.query(query);
+    writeMessageIntoDB(name,message)
     sendTheMails(message);
     res.send("Success!!!!");
 })
@@ -61,35 +58,6 @@ app.post('/textSearch',async (req,res)=>{
     const responseFromSearch=await DB.query('SELECT * FROM MessageList WHERE message LIKE '+"'"+dataToSearch+'%'+"'");
     res.send(responseFromSearch.rows);
 })
-async function sendTheMails(mailMessage){
-    let transporter=nodemailer.createTransport({
-    service:'gmail',
-    auth:{
-        user:process.env.USERNAME_ID,
-        pass:process.env.MAIL_PASSWORD
-    }
-})
-    let mailList;
-    const res=await DB.query('SELECT email FROM MailList')
-    mailList=res.rows;
-    let listOfMails=[];
-    mailList.forEach((e)=>{
-        listOfMails.push(e['email'])
-    })
-    let details={
-        from:"agoel@deqode.com",
-        to: listOfMails,
-        subject:"Broadcast Message",
-        text:mailMessage
-    }
-    transporter.sendMail(details,(err)=>{
-        if(err){
-            console.log("Error",err)
-        }else{
-            console.log("Mail sent successfully");
-        }
-    })
 
-}
 
 export default app;
