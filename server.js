@@ -1,11 +1,9 @@
-import express from 'express';
 import dotenv from 'dotenv';
 import app from './index.js';
 import pkg from 'pg';
 const {Client} = pkg;
 
 dotenv.config();
-
 
 const DB=new Client({
     host:'localhost',
@@ -14,6 +12,7 @@ const DB=new Client({
     password:process.env.DB_PASSWORD,
     database:'Atharv'
 })
+
 DB.connect()
 .then(()=>{
     console.log("DB Connection Successful")
@@ -26,4 +25,5 @@ const port=process.env.PORT || 4000;
 app.listen(port,()=>{
     console.log(`Server is up and running at port: ${port}`);
 })
+
 export{DB};
