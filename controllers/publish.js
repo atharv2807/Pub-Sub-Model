@@ -11,9 +11,7 @@ export async function writeMessageIntoDB(name,message){
         return 'Successful'
     }catch(err){
         return err.message;
-
     }
-
 }
 
 export async function sendTheMails(subject,mailMessage){
