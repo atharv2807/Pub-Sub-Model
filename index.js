@@ -81,9 +81,13 @@ app.post('/unsubscribe',async (req,res)=>{
     const {email}=req.body;
     const response=await unsubscribeUser(email)
     if(response==='Successful'){
-        res.sendFile(path.join(__dirname,'/public/success.html'))
+        res.sendFile(path.join(__dirname,'/public/feedback.html'))
     }
 
+})
+
+app.post('/feedback',(req,res)=>{
+    res.sendFile(path.join(__dirname,'/public/success.html'))
 })
 
 export default app;
