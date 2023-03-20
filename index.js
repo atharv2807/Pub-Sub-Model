@@ -4,11 +4,16 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import {fileURLToPath} from 'url';
 
-import { registerEmail } from './controllers/subscribe.js';
-import { writeMessageIntoDB } from './controllers/publish.js';
-import { sendTheMails } from './controllers/publish.js';
-import {textSearchInDB} from './controllers/textSearch.js'
-import { unsubscribeUser } from './controllers/unsubscribe.js'
+import { postPublishMessage } from './routes/postPublish.js';
+import { textSearch } from './routes/textSearch.js';
+import { unsubscribeAPI } from './routes/unsubscribe.js';
+import { postFeedback } from './routes/feedback.js';
+import { subscribeAPI } from './routes/subscribe.js';
+import { starterPage } from './routes/index.js';
+import { subscribeHomepage } from './routes/getSubscribe.js';
+import { getPublishPage } from './routes/getPublish.js';
+import { getTextSearchPage } from './routes/getTextSearch.js';
+import { getUnsubscribePage } from './routes/getUnsubscribe.js';
 
 const app=express();
 
@@ -28,66 +33,22 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 
 // Routes
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/starter.html'));
-})
 
-app.get('/subscribe',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/subscribe.html'))
-})
+// GET ROUTES
+app.use(starterPage)
+app.use(subscribeHomepage)
+app.use(getPublishPage)
+app.use(getTextSearchPage)
+app.use(getUnsubscribePage)
 
-app.get('/publish',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/publish.html'))
-})
+// POST ROUTES
+app.use(subscribeAPI)
+app.use(postPublishMessage)
+app.use(textSearch)
+app.use(unsubscribeAPI)
+app.use(postFeedback)
 
-app.get('/textSearch',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/textSearch.html'))
-})
 
-app.get('/unsubscribe',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/unsubscribe.html'))
-})
 
-app.post('/subscribe',async (req,res)=>{
-    const {name,email}=req.body;
-    const response=await registerEmail(name,email);
-    if(response==='Successful'){
-        res.sendFile(path.join(__dirname,'/public/success.html'))
-    }else{
-        res.send(response)
-    }
-
-})
-
-app.post('/publish',async (req,res)=>{
-    const {name,subject,inputMessage}=req.body;
-    console.log(name);
-    let response=await writeMessageIntoDB(name,inputMessage)
-    if(response==='Successful'){
-        response = await sendTheMails(subject,inputMessage);
-    }
-    if(response==='Successful'){
-        res.sendFile(path.join(__dirname,'/public/success.html'))
-    }
-})
-
-app.post('/textSearch',async (req,res)=>{
-    const dataToSearch=req.body.textToSearch;
-    const response=await textSearchInDB(dataToSearch);
-    res.send(response.rows);
-})
-
-app.post('/unsubscribe',async (req,res)=>{
-    const {email}=req.body;
-    const response=await unsubscribeUser(email)
-    if(response==='Successful'){
-        res.sendFile(path.join(__dirname,'/public/feedback.html'))
-    }
-
-})
-
-app.post('/feedback',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/public/success.html'))
-})
-
+export {__dirname as dirname};
 export default app;
