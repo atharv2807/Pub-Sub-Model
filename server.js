@@ -1,29 +1,34 @@
+import typeorm from 'typeorm'
 import dotenv from 'dotenv';
+import path from 'path';
 import app from './index.js';
 import pkg from 'pg';
+const port=process.env.PORT || 4000;
 const {Client} = pkg;
-
 dotenv.config();
 
-const DB=new Client({
+
+const dataSource=new typeorm.DataSource({
+    type:'postgres',
     host:'localhost',
     user:'postgres',
     port:5432,
     password:process.env.DB_PASSWORD,
-    database:'Atharv'
+    database:'Atharv',
+    entities:[path.join(__dirname,'..','entities/**.js')],
+    synchronize:true
 })
 
-DB.connect()
+dataSource.initialize()
 .then(()=>{
-    console.log("DB Connection Successful")
-})
-.catch((err)=>{
-    console.log('Error',err)
-})
-
-const port=process.env.PORT || 4000;
-app.listen(port,()=>{
+    console.log('DB Connected Successfully');
+    app.listen(port,()=>{
     console.log(`Server is up and running at port: ${port}`);
 })
+})
+.catch((err)=>{
+    console.log('Error:',err);
+})
 
-export{DB};
+
+export {dataSource}

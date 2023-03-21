@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import {DB} from './../server.js';
-
+import { dataSource } from './../server.js';
 export async function writeMessageIntoDB(name,message){
     try{
         const query={
