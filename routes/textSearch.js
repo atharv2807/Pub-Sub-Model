@@ -6,7 +6,7 @@ const router=express.Router();
 router.post('/textSearch',async (req,res)=>{
     const dataToSearch=req.body.textToSearch;
     const response=await textSearchInDB(dataToSearch);
-    res.send(response.rows);
+    res.send(response);
 })
 
 export {router as textSearch}

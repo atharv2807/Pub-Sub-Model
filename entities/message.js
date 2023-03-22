@@ -1,7 +1,7 @@
 import { EntitySchema } from "typeorm";
 
 export const messageSchema = new EntitySchema({
-  name: "message",
+  name: "Message",
   tableName: "message",
   columns: {
     id: {

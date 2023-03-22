@@ -2,14 +2,16 @@ import nodemailer from "nodemailer";
 import { dataSource } from "./../server.js";
 import { messageSchema } from "../entities/message.js";
 import { userSchema } from "../entities/user.js";
+
 export async function writeMessageIntoDB(name, message) {
   try {
+    console.log('writeMessageIntoDB executed');
     const messageTable = dataSource.getRepository(messageSchema);
-    const messageRecord = new messageSchema();
-    messageRecord.first_name = name.split(" ")[0];
-    messageRecord.last_name = name.split(" ")[1];
-    messageRecord.message = message;
-
+    const messageRecord={
+      first_name:name.split(" ")[0],
+      last_name: name.split(" ")[1],
+      messageData:message
+    }
     await messageTable.save(messageRecord);
     return "Successful";
   } catch (err) {
@@ -19,6 +21,8 @@ export async function writeMessageIntoDB(name, message) {
 
 export async function sendTheMails(subject, mailMessage) {
   try {
+    console.log('sendTheMails executed');
+
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -26,15 +30,16 @@ export async function sendTheMails(subject, mailMessage) {
         pass: process.env.MAIL_PASSWORD,
       },
     });
-    const messageRepo = dataSource.getRepository(userSchema);
-    const response = await messageRepo.find({ first_name, email });
-    res = res.rows;
+
+    const userRepo=dataSource.getRepository(userSchema);
+    const res=await userRepo.find();
+
     res.forEach((mailData) => {
       let details = {
         from: "agoel@deqode.com",
         to: mailData.email,
         subject: subject,
-        text: `Hello ${mailData.name}, \n\n ${mailMessage}`,
+        text: `Hello ${mailData.first_name}, \n\n ${mailMessage}`,
       };
       transporter.sendMail(details, (err) => {
         if (err) {

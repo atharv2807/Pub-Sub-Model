@@ -1,8 +1,8 @@
 import { EntitySchema } from "typeorm";
 
 export const userSchema=new EntitySchema({
-    name:"UserDetails",
-    tableName:"UserDetails",
+    name:"mailerList",
+    tableName:"mailerList",
     columns:{
         id:{
             primary:true,
@@ -21,3 +21,4 @@ export const userSchema=new EntitySchema({
         }
     }
 })
+

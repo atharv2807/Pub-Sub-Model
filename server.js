@@ -3,23 +3,23 @@ import dotenv from "dotenv";
 import path from "path";
 import app from "./index.js";
 import pg from "pg";
-import { fileURLToPath } from "url";
+import { messageSchema } from "./entities/message.js";
+import { userSchema } from "./entities/user.js";
 
 const port = process.env.PORT || 4000;
 // const {Client} = pkg;
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
 
 const dataSource = new typeorm.DataSource({
-  type: "postgres",
-  host: "localhost",
-  user: "postgres",
-  port: 5432,
-  password: process.env.DB_PASSWORD,
-  database: "postgres",
-  entities: [path.join(__dirname, "..", "entities/**.js")],
+  type:'postgres',
+  host:'localhost',
+  username:'postgres',
+  port:5432,
+  password:process.env.DB_PASSWORD,
+  database:'Atharv',
+  entities: [userSchema,messageSchema],
   synchronize: true,
 });
 

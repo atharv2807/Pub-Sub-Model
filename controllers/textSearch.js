@@ -1,13 +1,14 @@
-// import {DB} from './../server.js';
+import { messageSchema } from "../entities/message.js";
+import { dataSource } from "../server.js";
 
 export async function textSearchInDB(dataToSearch) {
-  const responseFromSearch = await DB.query(
-    "SELECT * FROM MessageList WHERE message LIKE " +
-      "'" +
-      "%" +
-      dataToSearch +
-      "%" +
-      "'"
-  );
-  return responseFromSearch;
+  try{
+    const messageRepo=await dataSource.getRepository(messageSchema)
+    .createQueryBuilder('user')
+    .where("user.messageData LIKE :d",{d: `%${dataToSearch}%`})
+    .getMany();
+    return messageRepo;
+  }catch(err){
+    return err.message;
+  }
 }
