@@ -7,13 +7,13 @@ export const userSchema=new EntitySchema({
         id:{
             primary:true,
             type:"int",
-            generated:true
+            generated:true,
         },
         first_name:{
-            type:"varchar"
+            type:"varchar",
         },
         last_name:{
-            type:"varchar"
+            type:"varchar",
         },
         email:{
             unique:true,

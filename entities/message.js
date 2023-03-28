@@ -17,6 +17,6 @@ export const messageSchema = new EntitySchema({
     },
     messageData: {
       type: "varchar",
-    },
-  },
+    }
+  }
 });

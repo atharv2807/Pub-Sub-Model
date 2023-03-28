@@ -1,16 +1,12 @@
 import typeorm from "typeorm";
 import dotenv from "dotenv";
-import path from "path";
 import app from "./index.js";
-import pg from "pg";
 import { messageSchema } from "./entities/message.js";
 import { userSchema } from "./entities/user.js";
 
 const port = process.env.PORT || 4000;
-// const {Client} = pkg;
+
 dotenv.config();
-
-
 
 const dataSource = new typeorm.DataSource({
   type:'postgres',
@@ -36,3 +32,5 @@ dataSource
   });
 
 export { dataSource };
+
+

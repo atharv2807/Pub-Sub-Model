@@ -10,6 +10,7 @@ router.post('/unsubscribe',async (req,res)=>{
     if(response==='Successful'){
         res.sendFile(path.join(dirname,'/public/feedback.html'))
     }
+    res.send(response)
 
 })
 

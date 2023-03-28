@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import bodyParser from 'body-parser';
+import cookieSession from 'cookie-session';
+import passport from 'passport';
 import {fileURLToPath} from 'url';
 
 import { postPublishMessage } from './routes/postPublish.js';
@@ -14,6 +16,8 @@ import { subscribeHomepage } from './routes/getSubscribe.js';
 import { getPublishPage } from './routes/getPublish.js';
 import { getTextSearchPage } from './routes/getTextSearch.js';
 import { getUnsubscribePage } from './routes/getUnsubscribe.js';
+import { authRoutes } from './routes/authRoute.js';
+import './config/passportSetup.js';
 
 const app=express();
 
@@ -28,6 +32,17 @@ app.set('views', path.join(__dirname, 'views'))
 // To render HTML files
 app.set('view engine', 'ejs')
 
+
+// Using cookie-session
+app.use(cookieSession({
+    maxAge:24*60*60*1000,
+    keys:[process.env.cookieSecret]
+}))
+
+// Initialzing Passport
+app.use(passport.initialize())
+app.use(passport.session())
+
 // For parsing the request body
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
@@ -40,6 +55,9 @@ app.use(subscribeHomepage)
 app.use(getPublishPage)
 app.use(getTextSearchPage)
 app.use(getUnsubscribePage)
+
+// Auth Routes
+app.use('/auth',authRoutes)
 
 // POST ROUTES
 app.use(subscribeAPI)

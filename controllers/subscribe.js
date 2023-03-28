@@ -10,7 +10,7 @@ export async function registerEmail(name, email) {
       email:email
     }
     const user=await userTable.save(userDetails);
-    return "Successful";
+    return user;
   } catch (err) {
     return err.message;
   }
