@@ -17,6 +17,7 @@ import { getPublishPage } from './routes/getPublish.js';
 import { getTextSearchPage } from './routes/getTextSearch.js';
 import { getUnsubscribePage } from './routes/getUnsubscribe.js';
 import { authRoutes } from './routes/authRoute.js';
+import { authSuccess } from './routes/loginSuccess.js';
 import './config/passportSetup.js';
 
 const app=express();
@@ -58,6 +59,7 @@ app.use(getUnsubscribePage)
 
 // Auth Routes
 app.use('/auth',authRoutes)
+app.use(authSuccess)
 
 // POST ROUTES
 app.use(subscribeAPI)

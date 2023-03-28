@@ -17,7 +17,7 @@ router.get('/google',passport.authenticate('google',{
 
 // Redirecting the user back to our site
 router.get('/google/redirect',passport.authenticate('google'),(req,res)=>{
-    res.send(req.user);
+    res.redirect('/loginSuccess')
 })
 
 export { router as authRoutes }
