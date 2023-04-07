@@ -5,7 +5,8 @@ export async function textSearchInDB(dataToSearch) {
   try{
     const messageRepo=await dataSource.getRepository(messageSchema)
     .createQueryBuilder('user')
-    .where("user.messageData LIKE :d",{d: `%${dataToSearch}%`})
+    // .where("user.messageData LIKE :d",{d: `%${dataToSearch}%`})
+    .where("user.messageData ~ :d",{d: `${dataToSearch}`})
     .getMany();
     return messageRepo;
   }catch(err){

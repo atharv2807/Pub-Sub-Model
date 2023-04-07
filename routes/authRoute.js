@@ -11,9 +11,9 @@ router.get('/login',(req,res)=>{
 })
 
 // Authenticating using google
-router.get('/google',passport.authenticate('google',{
-    scope:['email','profile']
-}))
+router.get('/google',passport.authenticate('google', { scope: ['email',
+'profile'],
+accessType: 'offline', prompt:'consent' }))
 
 // Redirecting the user back to our site
 router.get('/google/redirect',passport.authenticate('google'),(req,res)=>{

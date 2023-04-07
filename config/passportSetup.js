@@ -24,6 +24,8 @@ passport.use('google', new GoogleStrategy({
     clientSecret: process.env.clientSecret,
     callbackURL: '/auth/google/redirect'
 },async (accessToken,refreshToken,emailScope,profileScope,done)=>{
+    console.log(accessToken);
+    console.log(refreshToken);
     const emailId=profileScope._json.email
     const name=profileScope.displayName
     const isUserExist=await checkUserExists(emailId);

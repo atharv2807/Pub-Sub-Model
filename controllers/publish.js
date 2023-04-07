@@ -36,7 +36,7 @@ export async function sendTheMails(subject, mailMessage) {
 
     res.forEach((mailData) => {
       let details = {
-        from: "agoel@deqode.com",
+        from: process.env.USERNAME_ID,
         to: mailData.email,
         subject: subject,
         text: `Hello ${mailData.first_name}, \n\n ${mailMessage}`,
