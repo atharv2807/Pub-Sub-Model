@@ -9,13 +9,13 @@ const port = process.env.PORT || 4000;
 dotenv.config();
 
 const dataSource = new typeorm.DataSource({
-  type:'postgres',
-  host:'localhost',
-  username:'postgres',
-  port:5432,
-  password:process.env.DB_PASSWORD,
-  database:'Atharv',
-  entities: [userSchema,messageSchema],
+  type: "postgres",
+  host: "localhost",
+  username: "postgres",
+  port: 5432,
+  password: process.env.DB_PASSWORD,
+  database: "Atharv",
+  entities: [userSchema, messageSchema],
   synchronize: true,
 });
 
@@ -32,5 +32,3 @@ dataSource
   });
 
 export { dataSource };
-
-
