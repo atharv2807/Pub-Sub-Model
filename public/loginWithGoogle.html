@@ -24,14 +24,35 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background: linear-gradient(to right, #434343 0%, black 100%);
+      }
+      .backbox {
+        border-radius: 3%;
+        padding: 30px;
+        background-color: #fbffcd33;
+        color: white;
+      }
+      .backbox a {
+        text-decoration: none;
+      }
+      .backbox ol {
+        margin-left: 70px;
+      }
+      .backbox section{
+        margin-left: 130px;
+      }
+      .backbox a{
+        margin-left: 160px;
       }
     </style>
   </head>
   <body>
     <div class="mainBody">
-      <h1>Login To Subscribe Pub/Sub</h1>
-      <section>We have to verify you first!</section>
-      <a href="http://localhost:4000/auth/google">Login With Google</a>
+      <div class="backbox">
+        <h1>Login To Subscribe Pub/Sub</h1>
+        <section>We have to verify you first!</section>
+        <a href="http://localhost:4000/auth/google">Login With Google</a>
+      </div>
     </div>
   </body>
 </html>

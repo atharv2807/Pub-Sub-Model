@@ -18,18 +18,37 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            background: linear-gradient(to right, #434343 0%, black 100%);
         }
+        .backbox {
+        border-radius: 3%;
+        padding: 30px;
+        background-color: #fbffcd33;
+        color: white;
+      }
+      .backbox a {
+        text-decoration: none;
+      }
+      .backbox ol{
+        margin-left: 70px;
+      }
+      .backbox section{
+        margin-left: 130px;
+      }
     </style>
 </head>
 <body>
-    <h1>Unsubscribe API</h1>
-    <form method="POST" action="http://www.localhost:4000/unsubscribe">
-        <div class="mb-3">
-          <label for="exampleInputEmail" class="form-label">Email: </label>
-          <input type="email" name="email" class="form-control" id="exampleInputEmail" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Unsubscribe</button>
-      </form>
+    <div class="backbox">
+        <h1>Unsubscribe API</h1>
+        <form method="POST" action="http://www.localhost:4000/unsubscribe">
+            <div class="mb-3">
+              <label for="exampleInputEmail" class="form-label">Email: </label>
+              <input type="email" name="email" class="form-control" id="exampleInputEmail" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Unsubscribe</button>
+          </form>
+    </div>
+
     
 </body>
 </html>

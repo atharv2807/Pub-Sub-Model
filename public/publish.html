@@ -7,46 +7,60 @@
     <title>Publish</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <style>
-        .mainBody{
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        textarea{
-            height: 15%;
-            width: 30%;
-            border-radius: 5%;
-            resize: none;
-        }
-        .form{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      .mainBody {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to right, #434343 0%, black 100%);
+      }
+      .backbox {
+        border-radius: 3%;
+        padding: 30px;
+        background-color: #fbffcd33;
+        color: white;
+      }
+      .backbox a {
+        text-decoration: none;
+      }
+      .backbox ol {
+        margin-left: 70px;
+      }
+      .backbox section{
+        margin-left: 130px;
+      }
+      .backbox a{
+        margin-left: 160px;
+      }
     </style>
 </head>
 <body>
     <div class="mainBody">
-        <h1 class="p-2 m-2">Publish API</h1>
-        <form class="form" method="POST" action="http://www.localhost:4000/publish">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Name:  </span>
-                <input type="text" name="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Subject:  </span>
-                <input type="text" name="subject" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Publish Message: </span>
-                <input type="text" name="inputMessage" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-              </div>
-            <button type="submit" class="m-2 btn btn-primary">Publish</button>
-        </form>
+        <div class="backbox">
+            <h1 class="p-2 m-2">Publish API</h1>
+            <form class="form" method="POST" action="http://www.localhost:4000/publish">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Name:  </span>
+                    <input type="text" name="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Subject:  </span>
+                    <input type="text" name="subject" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Publish Message: </span>
+                    <input type="text" name="inputMessage" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                  </div>
+                <button type="submit" class="m-2 btn btn-primary">Publish</button>
+            </form>
+        </div>
+
     </div>
     
 </body>
